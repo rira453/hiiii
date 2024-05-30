@@ -1,0 +1,8 @@
+{% autoescape off %}
+
+ Bienvenue dans notre siteweb!!
+ Bonjour, {{ name }}!!
+ Veuillez verifier votre e-mail en cliquant sur ce lien.
+ Confirmation Link: http://{{ domain }}{% url 'activate' uidb64=uid token=token %} 
+
+ {% endautoescape %}
