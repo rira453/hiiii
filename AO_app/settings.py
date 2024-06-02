@@ -102,11 +102,11 @@ CRON_CLASSES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ao_db',
+        'NAME': 'ao_bd',
         'HOST' : '127.0.0.1',
         'PORT':'3306',
         'USER': 'root',
-        'PASSWORD': 'Fredaya2004.',
+        'PASSWORD': 'ChafikRabia1234@@',
     }
 }
 
