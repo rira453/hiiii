@@ -4,7 +4,9 @@ from django.urls import path, include
 from . import views
 from .views import *
 from django.views.generic import RedirectView
-
+admin.site.site_header = "La page admin du site des avis des appels d'offres"
+admin.site.site_title = "Dashboard"
+admin.site.index_title = "Bienvenue dans la page d'administration"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
