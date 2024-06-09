@@ -123,8 +123,10 @@ def sing_in(request):
                 messages.error(request, "Utilisateur non trouvé")
 
     return render(request, 'login.html', {})  # Display login form (login.html)
+
 from .models import UserRegistratione
 from django.contrib.auth.hashers import make_password
+
 def sing_up(request):
     error = False
     message = ""
@@ -133,6 +135,7 @@ def sing_up(request):
         name = request.POST.get('name', None)
         email = request.POST.get('email', None)
         activite = request.POST.get('activite', None)
+        categorie = request.POST.get('categorie', None)
         adresse = request.POST.get('adresse', None)
         ville = request.POST.get('ville', None)
         telephone = request.POST.get('telephone', None)
@@ -172,6 +175,7 @@ def sing_up(request):
                 username=name,
                 email=email,
                 activite=activite,
+                categorie=categorie,
                 adresse=adresse,
                 ville=ville,
                 telephone=telephone,

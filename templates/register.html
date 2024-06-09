@@ -47,7 +47,7 @@
         margin-bottom: 1.5rem !important;
       }
     </style>
-    <title>Sign up</title>
+    <title>S'inscrire</title>
   </head>
   <body>
     <section class="vh-100">
@@ -59,7 +59,7 @@
                 <div class="row justify-content-center">
                   <div class="col-md-10 col-lg-6 col-xl-12 order-2 order-lg-1">
                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                      Sign up
+                      S'inscrire
                     </p>
                     
                     {% if error %}
@@ -80,7 +80,7 @@
                             name="name"
                             required
                           />
-                          <label class="form-label" for="form3Example1c">Your Name</label>
+                          <label class="form-label" for="form3Example1c">Votre nom</label>
                         </div>
                       </div>
 
@@ -94,7 +94,7 @@
                             name="email"
                             required
                           />
-                          <label class="form-label" for="form3Example3c">Your Email</label>
+                          <label class="form-label" for="form3Example3c">Votre Email</label>
                         </div>
                       </div>
 
@@ -111,6 +111,30 @@
                           <label class="form-label" for="form3ExampleActivite">Activité</label>
                         </div>
                       </div>
+
+
+
+                      <div class="d-flex flex-row align-items-center mb-4">
+                        <i class="fas fa-tags fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <select
+                            id="form3ExampleCategorie"
+                            class="form-select"
+                            name="categorie"
+                            required
+                          >
+                            <option value="" disabled selected>Catégorie</option>
+                            <option value="Category 1">Informatique</option>
+                            <option value="Category 2">Assainissement</option>
+                            <option value="Category 3">Eau</option>
+                            <option value="Category 4">Électricité</option>
+                            <option value="Category 5">Transport</option>
+                            <option value="Category 6">Construction</option>
+                          </select>
+                          
+                        </div>
+                      </div>
+
 
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-home fa-lg me-3 fa-fw"></i>
@@ -178,7 +202,7 @@
                             name="password"
                             required
                           />
-                          <label class="form-label" for="form3Example4c">Password</label>
+                          <label class="form-label" for="form3Example4c">Mot de passe</label>
                         </div>
                       </div>
 
@@ -192,23 +216,18 @@
                             name="repassword"
                             required
                           />
-                          <label class="form-label" for="form3Example4cd">Repeat your password</label>
+                          <label class="form-label" for="form3Example4cd">Vérifier votre mot de passe</label>
                         </div>
                       </div>
 
                       <div class="form-check d-flex justify-content-center mb-5">
-                        <input
-                          class="form-check-input me-2"
-                          type="checkbox"
-                          value=""
-                          id="form2Example3c"
-                        />
-                        <center>T'as deja un compte? <a href="login.html">Connecter</a></center>
+                       
+                        <center>Vous avez déja un compte? <a href="login.html">Se connecter</a></center>
                       </div>
                       
                       <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <button type="submit" class="btn btn-primary btn-lg">
-                          Register
+                          Enregistrer
                         </button>
                       </div>
                     </form>

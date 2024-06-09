@@ -1,5 +1,7 @@
 from django.db import models
 
+from .encryption import encrypt, decrypt, generate_key
+import os
 
 from django.contrib.auth.models import User
 class ContactRequest(models.Model):
@@ -78,6 +80,7 @@ class UserRegistratione(models.Model):
     username = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     activite = models.CharField(max_length=150, blank=True)
+    categorie= models.CharField(max_length=150, blank=True)
     adresse = models.CharField(max_length=255, blank=True)
     ville = models.CharField(max_length=100, blank=True)
     telephone = models.CharField(max_length=15, blank=True)
@@ -86,5 +89,27 @@ class UserRegistratione(models.Model):
 
     def __str__(self):
         return self.username
+    
+
+
+
+
+KEY = os.getenv('ENCRYPTION_KEY')
+SALT = os.getenv('ENCRYPTION_SALT')
+
+if not KEY or not SALT:
+    raise ValueError("Les variables d'environnement ENCRYPTION_KEY et ENCRYPTION_SALT doivent être définies.")
+
+class SensitiveData(models.Model):
+    encrypted_field = models.BinaryField()
+
+    def save(self, *args, **kwargs):
+        # Encrypt the data before saving
+        self.encrypted_field = encrypt(self.encrypted_field, KEY)
+        super().save(*args, **kwargs)
+
+    def decrypt_data(self):
+        return decrypt(self.encrypted_field, KEY)
+
 
 

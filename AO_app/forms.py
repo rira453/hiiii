@@ -26,7 +26,7 @@ class NewsletterForm(forms.ModelForm):
         widgets = {
             'email': forms.EmailInput(attrs={
                 'class': 'form-control border-0 rounded-pill w-100 ps-4 pe-5',
-                'placeholder': 'Enter Your Email',
+                'placeholder': 'Saisir votre email',
                 'style': 'height: 48px;',
             })
         }
