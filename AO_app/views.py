@@ -127,10 +127,11 @@ def sing_in(request):
 from .models import UserRegistratione
 from django.contrib.auth.hashers import make_password
 
+
 def sing_up(request):
     error = False
     message = ""
-    
+
     if request.method == "POST":
         name = request.POST.get('name', None)
         email = request.POST.get('email', None)
@@ -149,13 +150,13 @@ def sing_up(request):
         except:
             error = True
             message = "Entrez un email valide s'il vous plaît !"
-        
+
         # Validation des mots de passe
-        if error == False:
+        if not error:
             if password != repassword:
                 error = True
                 message = "Les deux mots de passe ne correspondent pas !"
-        
+
         # Vérification de l'existence de l'utilisateur
         user = User.objects.filter(Q(email=email) | Q(username=name)).first()
         if user:
@@ -163,13 +164,13 @@ def sing_up(request):
             message = f"Un utilisateur avec l'email {email} ou le nom d'utilisateur {name} existe déjà !"
         if len(name) > 20:
             error = True
-            message = "Username must be under 20 characters!"
+            message = "Le nom d'utilisateur doit contenir moins de 20 caractères !"
         if not name.isalnum():
             error = True
-            message = "Username must be Alpha-Numeric!"
+            message = "Le nom d'utilisateur doit être alphanumérique !"
 
         # Enregistrement de l'utilisateur
-        if error == False:
+        if not error:
             # Save registration information in UserRegistratione table with hashed password
             user_reg = UserRegistratione(
                 username=name,
@@ -192,20 +193,20 @@ def sing_up(request):
             user.set_password(password)  # Set the password for the user
             user.is_active = False  # Set user as inactive until email confirmation
             user.save()
-            
+
             messages.success(request, "Votre compte a été créé! Veuillez vérifier votre courrier électronique pour confirmer votre adresse e-mail afin d'activer votre compte.")
-            
-            subject = "Bienvenue dans notre siteweb!!"
-            message = f"Bonjour {activite}!! \nBienvenue!! \nMerci de visiter notre siteweb. On a vous envoyé un email de confirmation, S'il vous plaît confirmer votre adresse email. \n\nMerci Beaucoup\nVeolia"
+
+            subject = "Bienvenue sur notre site web!"
+            message = f"Bonjour {activite}!! \nBienvenue!! \nMerci de visiter notre site web. Nous vous avons envoyé un e-mail de confirmation, veuillez confirmer votre adresse e-mail. \n\nMerci Beaucoup\nVeolia"
             from_email = settings.EMAIL_HOST_USER
             to_list = [email]
             send_mail(subject, message, from_email, to_list, fail_silently=True)
-        
+
             # Email Address Confirmation Email
             current_site = get_current_site(request)
-            email_subject = "Confirm your Email for Login!!"
+            email_subject = "Confirmez votre adresse e-mail"
             message2 = render_to_string('Email.html', {
-                'name': activite,
+                'name': name,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': generate_token.make_token(user)
@@ -217,14 +218,15 @@ def sing_up(request):
                 from_email,
                 [email],
             )
+            email.content_subtype = 'html'  # Specify HTML content
             email.send(fail_silently=True)
             return redirect('sing_in')  # Redirection vers la page de connexion après l'inscription
-            
+
     context = {
         'error': error,
         'message': message
     }
-    
+
     return render(request, 'register.html', context)
 @login_required(login_url='sing_in')
 def dashboard(request):

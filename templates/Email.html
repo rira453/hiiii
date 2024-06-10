@@ -1,8 +1,69 @@
-{% autoescape off %}
-
- Bienvenue dans notre siteweb!!
- Bonjour, {{ name }}!!
- Veuillez verifier votre e-mail en cliquant sur ce lien.
- Confirmation Link: http://{{ domain }}{% url 'activate' uidb64=uid token=token %} 
-
- {% endautoescape %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de votre adresse email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #0073e6;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #0073e6;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            color: #777777;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bienvenue sur notre site web !</h1>
+        </div>
+        <div class="content">
+            <p>Bonjour {{ name }},</p>
+            <p>Merci de vous être inscrit sur notre site. Veuillez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous :</p>
+            <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" class="button">Confirmer mon adresse e-mail</a>
+            <p>Si vous n'avez pas demandé cette inscription, veuillez ignorer cet e-mail.</p>
+            <p>Cordialement,</p>
+            <p><strong>L'équipe AMENDIS</strong></p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 Veolia. Tous droits réservés.</p>
+        </div>
+    </div>
+</body>
+</html>
