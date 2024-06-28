@@ -1,0 +1,11 @@
+body {
+    font-family: Arial, sans-serif; /* Change the font as desired */
+}
+
+/* Example of changing colors */
+.module h2 {
+    background-color: #337ab7; /* Change the background color of section headers */
+    color: #fff; /* Change the text color of section headers */
+}
+
+/* Add more custom styles as needed */

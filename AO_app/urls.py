@@ -4,12 +4,16 @@ from django.urls import path, include
 from . import views
 from .views import *
 from django.views.generic import RedirectView
-admin.site.site_header = "La page admin du site des avis des appels d'offres"
+admin.site.site_header = "La page d'administration du site des avis d'appels d'offres"
 admin.site.site_title = "Dashboard"
-admin.site.index_title = "Bienvenue dans la page d'administration"
+admin.site.index_title = "Tableau de bord de l'administration"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin_tools_stats/',include('admin_tools_stats.urls')),
+   
+    path('dashboard/', views.dashboard, name='dashboard'),
+    
     path('logout/', custom_logout_view, name='admin/logout/'),
     
     #path('jet/', include('jet.urls', 'jet')),
@@ -35,4 +39,5 @@ urlpatterns = [
     path('update-password/<uidb64>/<token>/', update_password, name='update_password'),
     path('profile.html', profile_view, name='profile'),
     path('download_pdf/<int:pk>/', views.download_pdf, name='download_pdf'),
+    
 ]

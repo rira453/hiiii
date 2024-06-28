@@ -1,3 +1,4 @@
+
 from django.shortcuts import render,HttpResponse, redirect,  get_object_or_404
 from .forms import ContactForm, NewsletterForm
 from .models import ContactRequest, TableData, Marche 
@@ -21,7 +22,7 @@ from AO_app import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.http import FileResponse, Http404
-from .models import TableData, DownloadHistory
+from .models import *
 
 
 
@@ -397,3 +398,32 @@ from django.shortcuts import redirect
 def custom_logout_view(request):
     logout(request)
     return redirect('/admin/login/')
+
+from django.shortcuts import render
+from django.utils import timezone
+from .models import UserRegistratione, DownloadHistory, TableData
+from datetime import timedelta
+from django.db import models 
+
+def dashboard(request):
+    # Calculate the number of new members
+    one_month_ago = timezone.now() - timedelta(days=30)
+    new_members = UserRegistratione.objects.filter(date_joined__gte=one_month_ago).count()
+    
+    # Get download history
+    download_history = DownloadHistory.objects.all()
+    
+    # Count downloads per document
+    document_downloads = (
+        DownloadHistory.objects
+        .values('table_data__designation')
+        .annotate(download_count=models.Count('id'))
+    )
+
+    context = {
+        'new_members': new_members,
+        'download_history': download_history,
+        'document_downloads': document_downloads,
+    }
+
+    return render(request, 'dashboard.html', context)

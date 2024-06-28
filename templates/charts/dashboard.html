@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .header, .stats {
+            background: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .stats div {
+            display: inline-block;
+            width: 30%;
+            margin: 10px;
+            padding: 20px;
+            background: #555;
+            color: #fff;
+            border-radius: 5px;
+        }
+        h1 {
+            margin: 0;
+            padding-bottom: 20px;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="stats">
+            <div>
+                <h2>New Members</h2>
+                <p>{{ new_members }}</p>
+            </div>
+            <div>
+                <h2>Download History</h2>
+                <ul>
+                    {% for download in download_history %}
+                        <li>{{ download.user.username }} downloaded {{ download.table_data.designation }} on {{ download.download_timestamp }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h2>Document Downloads</h2>
+                <canvas id="documentDownloadsChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+
+   

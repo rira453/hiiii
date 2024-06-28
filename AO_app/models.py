@@ -1,6 +1,6 @@
 from django.db import models
 
-from .encryption import encrypt, decrypt, generate_key
+
 import os
 
 from django.contrib.auth.models import User
@@ -11,23 +11,28 @@ class ContactRequest(models.Model):
         ('Reclamation anonyme', 'Reclamation anonyme')
     ]
     
+    
     type_of_request = models.CharField(max_length=50, choices=TYPE_OF_REQUEST_CHOICES)
     company_name = models.CharField(max_length=255)
     industry = models.CharField(max_length=255)
     full_name = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=15)
     email = models.EmailField()
     observations = models.TextField()
     
     def __str__(self):
         return self.full_name
+    
+    class Meta:
+        verbose_name = "Demande de Contact"  # Singular display name
+        verbose_name_plural = "Demandes de Contact"  # Plural display name
 
     
 class TableData(models.Model):
     site = models.CharField(max_length=100)
     numero_ao = models.CharField(max_length=100)
     designation = models.TextField()
-    categorie = models.TextField()
+    categorie = models.TextField(default='Default Category')
     date_lancement = models.DateField()
     date_remise = models.DateField()
     date_ouverture = models.DateField()
@@ -39,11 +44,15 @@ class TableData(models.Model):
     def __str__(self):
         return self.numero_ao
     
+    class Meta:
+        verbose_name = "Table AO"  # Singular display name
+        verbose_name_plural = "Tables AO"  # Plural display name
+    
 class Marche(models.Model):
     site = models.CharField(max_length=100)
     numero_ao = models.CharField(max_length=100)
     designation = models.TextField()
-    categorie = models.TextField()
+    categorie = models.TextField(default='Default Category')
     ouverture_financiere = models.DateField()
     montant_dhht = models.DecimalField(max_digits=10, decimal_places=2)
     attributaire = models.CharField(max_length=100)
@@ -52,12 +61,20 @@ class Marche(models.Model):
     def __str__(self):
         return self.numero_ao
     
+    class Meta:
+        verbose_name = "Marché attribue"  # Singular display name
+        verbose_name_plural = "Marchés attribues"  # Plural display name
+    
 class NewsletterSubscription(models.Model):
     email = models.EmailField(unique=True)
     subscribed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.email
+    
+    class Meta:
+        verbose_name = "Abonnement AO"  # Singular display name
+        verbose_name_plural = "Abonnements AO"  # Plural display name
 
 
 
@@ -78,11 +95,15 @@ class DownloadHistory(models.Model):
     def __str__(self):
         return f"{self.user.username} downloaded {self.table_data.numero_ao} on {self.download_timestamp}"
     
+    class Meta:
+        verbose_name = "Historique de téléchargement"  # Singular display name
+        verbose_name_plural = "Historiques de téléchargement"  # Plural display name
+    
 class UserRegistratione(models.Model):
     username = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     activite = models.CharField(max_length=150, blank=True)
-    categorie= models.CharField(max_length=150, blank=True)
+    categorie= models.CharField(max_length=150, blank=True, default='Default Category')
     adresse = models.CharField(max_length=255, blank=True)
     ville = models.CharField(max_length=100, blank=True)
     telephone = models.CharField(max_length=15, blank=True)
@@ -92,26 +113,11 @@ class UserRegistratione(models.Model):
     def __str__(self):
         return self.username
     
+    class Meta:
+        verbose_name = "Inscription des utilisateurs"  # Singular display name
+        verbose_name_plural = "Inscriptions des utilisateurs"  # Plural display name
+    
 
-
-
-
-KEY = os.getenv('ENCRYPTION_KEY')
-SALT = os.getenv('ENCRYPTION_SALT')
-
-if not KEY or not SALT:
-    raise ValueError("Les variables d'environnement ENCRYPTION_KEY et ENCRYPTION_SALT doivent être définies.")
-
-class SensitiveData(models.Model):
-    encrypted_field = models.BinaryField()
-
-    def save(self, *args, **kwargs):
-        # Encrypt the data before saving
-        self.encrypted_field = encrypt(self.encrypted_field, KEY)
-        super().save(*args, **kwargs)
-
-    def decrypt_data(self):
-        return decrypt(self.encrypted_field, KEY)
 
 
 
