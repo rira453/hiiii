@@ -9,8 +9,13 @@ admin.site.site_title = "Dashboard"
 admin.site.index_title = "Tableau de bord de l'administration"
 
 urlpatterns = [
+    
+    path('admin/download_history_data/', views.download_history_data, name='download_history_data'),
+     path('admin/contact_request_data/', views.contact_request_data, name='contact_request_data'),
+     
     path('admin/', admin.site.urls),
     path('admin_tools_stats/',include('admin_tools_stats.urls')),
+    
    
     path('dashboard/', views.dashboard, name='dashboard'),
     
@@ -39,5 +44,9 @@ urlpatterns = [
     path('update-password/<uidb64>/<token>/', update_password, name='update_password'),
     path('profile.html', profile_view, name='profile'),
     path('download_pdf/<int:pk>/', views.download_pdf, name='download_pdf'),
+    path('admin/compose-email/', compose_email, name='compose_email'),
+    path('charts.html/', views.download_history_chart, name='dashboard'),
     
-]
+    
+   
+         ]

@@ -23,6 +23,11 @@ from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.http import FileResponse, Http404
 from .models import *
+from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
+from django.contrib.auth.models import User
+from django import forms
+import plotly.express as px
 
 
 
@@ -363,13 +368,124 @@ def download_pdf(request, pk):
             raise Http404
     except TableData.DoesNotExist:
         raise Http404
+
+    
+
+
 from django.contrib.admin.views.decorators import staff_member_required
 @staff_member_required
 def view_download_history(request):
     download_history = DownloadHistory.objects.all()
+
     return render(request, 'admin/view_download_history.html', {'download_history': download_history})
 
 
+from plotly.offline import plot
+import plotly.graph_objs as go
+def download_history_chart(request):
+    # Query data for the chart
+    download_history = DownloadHistory.objects.all()
+
+    # Prepare data for the chart
+    timestamps = [history.download_timestamp for history in download_history]
+    user_names = [history.user.username for history in download_history]
+
+    # Create a Plotly figure
+    fig = go.Figure([go.Bar(x=timestamps, y=user_names)])
+    fig.add_trace(go.Scatter(x=timestamps, y=user_names, mode='markers', name='Downloads'))
+
+    # Customize layout
+    fig.update_layout(title='Download History',
+                      xaxis_title='Timestamp',
+                      yaxis_title='User',
+                      template='plotly_dark')  # Optional: Choose a Plotly theme
+
+    # Convert the figure to JSON and render it in the template
+    plot_div = plot(fig, output_type='div', include_plotlyjs=False)
+
+    context = {'plot_div': plot_div}
+    return render(request, 'charts.html', context)
+
+def download_history_admin(request):
+    download_history = DownloadHistory.objects.all()
+
+    # Prepare data for the chart
+    timestamps = [history.download_timestamp for history in download_history]
+    user_names = [history.user.username for history in download_history]
+
+    # Create a Plotly figure
+    fig = go.Figure([go.Bar(x=timestamps, y=user_names)])
+    fig.add_trace(go.Scatter(x=timestamps, y=user_names, mode='markers', name='Downloads'))
+
+    # Customize layout
+    fig.update_layout(title='Download History',
+                      xaxis_title='Timestamp',
+                      yaxis_title='User',
+                      template='plotly_dark')  # Optional: Choose a Plotly theme
+
+    # Convert the figure to JSON and render it in the template
+    plot_div = plot(fig, output_type='div', include_plotlyjs=False)
+
+    context = {'plot_div': plot_div}
+    return render(request, 'admin/index.html', context)
+
+#######################################""
+def download_history_data(request):
+    # Example: Count downloads per day
+    downloads = DownloadHistory.objects.extra(select={'day': 'date( download_timestamp )'}).values('day').annotate(count=Count('id')).order_by('day')
+    
+    data = {
+        "labels": [download['day'] for download in downloads],
+        "data": [download['count'] for download in downloads],
+    }
+    return JsonResponse(data)
+
+def contact_request_data(request):
+    requests = ContactRequest.objects.values('type_of_request').annotate(count=Count('id')).order_by('type_of_request')
+    
+    data = {
+        "labels": [request['type_of_request'] for request in requests],
+        "data": [request['count'] for request in requests],
+    }
+    return JsonResponse(data)
+
+from datetime import datetime, timedelta
+
+def admin_dashboard(request):
+    # Total number of downloads
+    total_downloads = DownloadHistory.objects.count()
+    
+    # Total number of users
+    total_users = User.objects.count()
+    
+    # Total number of new users this week
+    start_of_week = timezone.now() - timezone.timedelta(days=timezone.now().weekday())
+    new_users_this_week = User.objects.filter(date_joined__gte=start_of_week).count()
+
+    print(f"Total Downloads: {total_downloads}")
+    print(f"Total Users: {total_users}")
+    print(f"New Users This Week: {new_users_this_week}")
+
+    context = {
+        'total_downloads': total_downloads,
+        'total_users': total_users,
+        'new_users_this_week': new_users_this_week,
+    }
+    return render(request, 'admin/index.html', context)
+
+
+
+#############################################""
+def admin_dashboard(request):
+    total_downloads = DownloadHistory.objects.count()
+    print(f"Total downloads: {total_downloads}") 
+
+    context = {
+        'total_downloads': total_downloads,
+        # Add other context variables as needed
+    }
+
+    return render(request, 'admin/index.html', context)
 
 from django.utils import timezone
 from datetime import timedelta
@@ -392,6 +508,35 @@ def deactivate_inactive_users():
         send_mail(subject, message, from_email, to_email)
         
     print(f"Deactivated {inactive_users.count()} users and sent emails")
+
+def index(request):
+    table_data = TableData.objects.all()  # Query all instances of TableData
+    total_downloads = 100  # Example, replace with your actual logic to calculate total downloads
+
+    context = {
+        'table_data': table_data,
+        'total_downloads': total_downloads,
+    }
+
+    return render(request, 'admin/index.html', context)
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.db.models import Count
+from .models import DownloadHistory
+
+def download_history_chart(request):
+    # Query the DownloadHistory model to get the data
+    download_history = DownloadHistory.objects.all()
+
+    # Prepare data for the chart
+    chart_data = [['User', 'Number of Downloads']]
+    for history in download_history:
+        chart_data.append([history.user.username, history.user.downloadhistory_set.count()])
+
+    context = {
+        'chart_data': chart_data,
+    }
+    return render(request, 'admin/index.html', context)
 
 from django.shortcuts import redirect
 
@@ -427,3 +572,30 @@ def dashboard(request):
     }
 
     return render(request, 'dashboard.html', context)
+
+
+class EmailForm(forms.Form):
+    recipients = forms.ModelMultipleChoiceField(queryset=User.objects.all(), widget=forms.CheckboxSelectMultiple)
+    subject = forms.CharField(max_length=255)
+    message = forms.CharField(widget=forms.Textarea)
+    attachment = forms.FileField(required=False)
+
+def compose_email(request):
+    if request.method == 'POST':
+        form = EmailForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipients = form.cleaned_data['recipients']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            attachment = request.FILES.get('attachment')
+
+            email = EmailMessage(subject, message, to=[user.email for user in recipients])
+            if attachment:
+                email.attach(attachment.name, attachment.read(), attachment.content_type)
+            email.send()
+
+            return redirect('admin:index')
+    else:
+        form = EmailForm()
+
+    return render(request, 'admin/compose_email.html', {'form': form})

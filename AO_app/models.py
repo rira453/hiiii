@@ -95,9 +95,15 @@ class DownloadHistory(models.Model):
     def __str__(self):
         return f"{self.user.username} downloaded {self.table_data.numero_ao} on {self.download_timestamp}"
     
+    @classmethod
+    def get_total_downloads(cls):
+        return cls.objects.count()
+
     class Meta:
         verbose_name = "Historique de téléchargement"  # Singular display name
         verbose_name_plural = "Historiques de téléchargement"  # Plural display name
+    
+    
     
 class UserRegistratione(models.Model):
     username = models.CharField(max_length=150)

@@ -48,9 +48,10 @@ MESSAGE_TAGS = {
 
 
 INSTALLED_APPS = [
+    
     'admin_tools_stats',
     'django_nvd3',
-
+    'admin_list_charts',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -62,7 +63,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     "anymail",
     'django_cron',
-    'multiselectfield',
+    
     
     
     
@@ -207,7 +208,8 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Portail d'Administration",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-     #"site_logo": "/static/img/logo1.png",
+     #"site_logo": "/Users/user/Desktop/hiiii/static/img/logo1.png",
+     
 
     
 
@@ -235,7 +237,7 @@ JAZZMIN_SETTINGS = {
 
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": None,
-
+    
     ############
     # Top Menu #
     ############
@@ -287,19 +289,17 @@ JAZZMIN_SETTINGS = {
 
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
+        
         "books": [{
             "name": "Make Messages", 
             "url": "make_messages", 
             "icon": "fas fa-comments",
             "permissions": ["books.view_book"]
         },
-         {"name": "Demandes de contact", "url": "contactrequest", "icon": "fas fa-envelope"},
-            {"name": "Table Data", "url": "admin:your_app_name_tabledata_changelist", "icon": "fas fa-table"},
-            {"name": "Marche", "url": "admin:your_app_name_marche_changelist", "icon": "fas fa-handshake"},
-            {"name": "Newsletter Subscriptions", "url": "admin:your_app_name_newslettersubscription_changelist", "icon": "fas fa-newspaper"},
-            {"name": "Profiles", "url": "admin:your_app_name_profile_changelist", "icon": "fas fa-user-circle"},
-            {"name": "Download History", "url": "admin:your_app_name_downloadhistory_changelist", "icon": "fas fa-download"},
-            {"name": "User Registrations", "url": "admin:your_app_name_userregistratione_changelist", "icon": "fas fa-user-plus"},]
+                
+],
+        
+              
     },
 
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
@@ -315,7 +315,10 @@ JAZZMIN_SETTINGS = {
         "AO_app.Profile": "fas fa-user-circle",
         "AO_app.DownloadHistory": "fas fa-download",
         "AO_app.UserRegistratione": "fas fa-user-plus",
+
     },
+
+    
     # Icons that are used when one is not manually specified
     #"default_icon_parents": "fas fa-chevron-circle-right",
     #"default_icon_children": "fas fa-circle",
@@ -385,3 +388,4 @@ JAZZMIN_UI_TWEAKS = {
     }
 }
 
+ADMIN_TOOLS_INDEX_DASHBOARD = 'AO_app.dashboards.CustomIndexDashboard'
