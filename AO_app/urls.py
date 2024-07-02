@@ -12,7 +12,7 @@ urlpatterns = [
     
     path('admin/download_history_data/', views.download_history_data, name='download_history_data'),
      path('admin/contact_request_data/', views.contact_request_data, name='contact_request_data'),
-     
+      path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('admin/', admin.site.urls),
     path('admin_tools_stats/',include('admin_tools_stats.urls')),
     
@@ -46,7 +46,9 @@ urlpatterns = [
     path('download_pdf/<int:pk>/', views.download_pdf, name='download_pdf'),
     path('admin/compose-email/', compose_email, name='compose_email'),
     path('charts.html/', views.download_history_chart, name='dashboard'),
-    
+     path('admin/newsletter_subscription_data/', views.newsletter_subscription_data, name='newsletter_subscription_data'),
+    path('admin/download_history_data/', views.download_history_data, name='download_history_data'),
+    path('admin/contact_request_data/', views.contact_request_data, name='contact_request_data'),
     
    
          ]

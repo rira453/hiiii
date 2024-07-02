@@ -11,7 +11,7 @@ from plotly.offline import plot
 from chartjs.views.lines import BaseLineChartView
 from django.contrib.admin.models import LogEntry
 
-admin.site.register(LogEntry)
+
 
 # Override admin index template
 admin.site.index_template = "admin/index.html"
@@ -56,7 +56,8 @@ class DownloadHistoryAdmin(admin.ModelAdmin):
     list_display = ('user', 'table_data', 'download_timestamp')
     search_fields = ['user__username', 'table_data__numero_ao']
 
-    
+
+admin.site.register(LogEntry)    
 
     
 

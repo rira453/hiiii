@@ -449,30 +449,32 @@ def contact_request_data(request):
     }
     return JsonResponse(data)
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,date 
 
 def admin_dashboard(request):
-    # Total number of downloads
-    total_downloads = DownloadHistory.objects.count()
+    # Example context data, replace with actual data retrieval logic
+    total_downloads = 1000
+    total_users = 500
+    new_users_this_week = 20
+    new_downloads = 50
+    recent_actions = []  # Replace with actual recent actions data
+    latest_registrations = []  # Replace with actual latest registrations data
     
-    # Total number of users
-    total_users = User.objects.count()
+    # Fetch user registrations, example query
+    user_registrations = UserRegistratione.objects.all().order_by('-created_at')[:10]  # Example: get latest 10 registrations
     
-    # Total number of new users this week
-    start_of_week = timezone.now() - timezone.timedelta(days=timezone.now().weekday())
-    new_users_this_week = User.objects.filter(date_joined__gte=start_of_week).count()
-
-    print(f"Total Downloads: {total_downloads}")
-    print(f"Total Users: {total_users}")
-    print(f"New Users This Week: {new_users_this_week}")
-
+    # Context dictionary to pass to template
     context = {
         'total_downloads': total_downloads,
         'total_users': total_users,
         'new_users_this_week': new_users_this_week,
+        'new_downloads': new_downloads,
+        'recent_actions': recent_actions,
+        'latest_registrations': latest_registrations,
+        'user_registrations': user_registrations,  # Add user registrations data
     }
-    return render(request, 'admin/index.html', context)
-
+    
+    return render(request, 'admin/admin_dashboard.html', context)
 
 
 #############################################""
@@ -599,3 +601,53 @@ def compose_email(request):
         form = EmailForm()
 
     return render(request, 'admin/compose_email.html', {'form': form})
+
+
+
+def newsletter_subscription_data(request):
+    # Filter data for the last 7 days
+    last_7_days = timezone.now() - timedelta(days=7)
+    data = (
+        NewsletterSubscription.objects.filter(subscribed_at__gte=last_7_days)
+        .extra(select={'day': 'date(subscribed_at)'})
+        .values('day')
+        .annotate(count=Count('id'))
+        .order_by('day')
+    )
+    
+    # Prepare the data for the chart
+    labels = [item['day'] for item in data]
+    data = [item['count'] for item in data]
+    return JsonResponse({'labels': labels, 'data': data})
+
+def download_history_data(request):
+    # Filter data for the last 7 days
+    last_7_days = timezone.now() - timedelta(days=7)
+    data = (
+        DownloadHistory.objects.filter(download_timestamp__gte=last_7_days)
+        .extra(select={'day': 'date(download_timestamp)'})
+        .values('day')
+        .annotate(count=Count('id'))
+        .order_by('day')
+    )
+    
+    # Prepare the data for the chart
+    labels = [item['day'] for item in data]
+    data = [item['count'] for item in data]
+    return JsonResponse({'labels': labels, 'data': data})
+
+def contact_request_data(request):
+    # Filter data for the last 7 days
+    last_7_days = timezone.now() - timedelta(days=7)
+    data = (
+        ContactRequest.objects.filter(observations__gte=last_7_days)
+        .extra(select={'day': 'date(observations)'})
+        .values('day')
+        .annotate(count=Count('id'))
+        .order_by('day')
+    )
+    
+    # Prepare the data for the chart
+    labels = [item['day'] for item in data]
+    data = [item['count'] for item in data]
+    return JsonResponse({'labels': labels, 'data': data})
