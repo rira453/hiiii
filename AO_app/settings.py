@@ -387,4 +387,4 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success"
     }
 }
-ADMIN_TOOLS_INDEX_DASHBOARD = 'AO_app.dashboards.CustomIndexDashboard'
+

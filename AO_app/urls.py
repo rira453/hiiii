@@ -16,12 +16,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin_tools_stats/',include('admin_tools_stats.urls')),
     
-   
-    path('dashboard/', views.dashboard, name='dashboard'),
-    
+      
     path('logout/', custom_logout_view, name='admin/logout/'),
     
-    #path('jet/', include('jet.urls', 'jet')),
+    
     path('', views.index, name='index'),
     path('index.html', views.index, name='index'),
     path('ao.html', views.ao, name='ao'),

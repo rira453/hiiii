@@ -511,16 +511,6 @@ def deactivate_inactive_users():
         
     print(f"Deactivated {inactive_users.count()} users and sent emails")
 
-def index(request):
-    table_data = TableData.objects.all()  # Query all instances of TableData
-    total_downloads = 100  # Example, replace with your actual logic to calculate total downloads
-
-    context = {
-        'table_data': table_data,
-        'total_downloads': total_downloads,
-    }
-
-    return render(request, 'admin/index.html', context)
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.db.models import Count
@@ -651,3 +641,5 @@ def contact_request_data(request):
     labels = [item['day'] for item in data]
     data = [item['count'] for item in data]
     return JsonResponse({'labels': labels, 'data': data})
+
+

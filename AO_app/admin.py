@@ -14,7 +14,7 @@ from django.contrib.admin.models import LogEntry
 
 
 # Override admin index template
-admin.site.index_template = "admin/index.html"
+admin.site.index_template = "admin/index_admin.html"
 
 
 class DownloadHistoryChart(BaseLineChartView):

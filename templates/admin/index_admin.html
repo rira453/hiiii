@@ -1,0 +1,298 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="my-4 text-center">Tableau de bord d'administration</h1>
+
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="card text-white bg-primary shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Téléchargements</h5>
+                            <p class="card-text display-4">70</p> <!-- Valeur factice -->
+                        </div>
+                        <div>
+                            <i class="fas fa-download fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card text-white bg-success shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Total d'utilisateurs</h5>
+                            <p class="card-text display-4">75</p> <!-- Valeur factice -->
+                        </div>
+                        <div>
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card text-white bg-info shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Utilisateurs/semaine</h5>
+                            <p class="card-text display-4">10</p> <!-- Valeur factice -->
+                        </div>
+                        <div>
+                            <i class="fas fa-user-plus fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card text-white bg-warning shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Téléchargements/semaine</h5>
+                            <p class="card-text display-4">20</p> <!-- Valeur factice -->
+                        </div>
+                        <div>
+                            <i class="fas fa-file-download fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Historique de téléchargement</h5>
+                    <canvas id="downloadHistoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Demandes de Contact</h5>
+                    <canvas id="contactRequestChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Abonnements Appel d'offre</h5>
+                    <canvas id="newsletterSubscriptionChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Nombre de téléchargements</h5>
+                    <canvas id="downloadsCountChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Actions récentes</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-user-plus text-success"></i>
+                            2024-07-01 10:00:00 - admin: Ajout d'un nouvel utilisateur.
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-download text-primary"></i>
+                            2024-07-01 11:00:00 - user: Suppression de « brahim »..
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-user-edit text-warning"></i>
+                            2024-07-01 12:00:00 - user: Modification de « 034/26 TA » — Modification de Date lancement..
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Dernières inscriptions</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-user-check text-success"></i>
+                            adam26 - Inscrit: 2024-06-30
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-user-check text-success"></i>
+                            agreen - Inscrit: 2024-06-29
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-user-check text-success"></i>
+                            akelley - Inscrit: 2024-06-28
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Statut de l'utilisateur</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            user1 - user2 - Statut: <i class="fas fa-check-circle text-success"></i> Actif
+                        </li>
+                        <li class="list-group-item">
+                            user3 - user4 - Statut: <i class="fas fa-times-circle text-danger"></i> Inactif
+                        </li>
+                        <li class="list-group-item">
+                            user5 - user6 - Statut: <i class="fas fa-check-circle text-success"></i> Actif
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Dummy data for download history chart
+    var downloadHistoryData = {
+        labels: [ 'Avr', 'Mai', ' juin', 'Juill'],
+        data: [ 10, 20, 30, 45]
+    };
+    var ctx1 = document.getElementById('downloadHistoryChart').getContext('2d');
+    var downloadHistoryChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: downloadHistoryData.labels,
+            datasets: [{
+                label: 'Téléchargements totaux',
+                data: downloadHistoryData.data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Dummy data for contact request chart
+    var contactRequestData = {
+        labels: ['Info Request', 'Reclamation', 'Anonymous Reclamation'],
+        data: [50, 30, 20]
+    };
+    var ctx2 = document.getElementById('contactRequestChart').getContext('2d');
+    var contactRequestChart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: contactRequestData.labels,
+            datasets: [{
+                label: 'Demandes de contact',
+                data: contactRequestData.data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Dummy data for newsletter subscription chart
+    var newsletterSubscriptionData = {
+        labels: [ 'Avr', 'Mai', ' juin', 'Juill'],
+        data: [ 15, 25, 20, 35]
+    };
+    var ctx3 = document.getElementById('newsletterSubscriptionChart').getContext('2d');
+    var newsletterSubscriptionChart = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: newsletterSubscriptionData.labels,
+            datasets: [{
+                label: 'Nbre d abonnement',
+                data: newsletterSubscriptionData.data,
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Dummy data for downloads count chart
+    var downloadsCountData = {
+        labels: ['034/50 TA', '034/26 TA', '034/24 TA'],
+        data: [10, 5, 15] // Dummy values, replace with actual data
+    };
+    var ctx4 = document.getElementById('downloadsCountChart').getContext('2d');
+    var downloadsCountChart = new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            labels: downloadsCountData.labels,
+            datasets: [{
+                label: 'Téléchargements totaux',
+                data: downloadsCountData.data,
+                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
