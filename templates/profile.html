@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/veolia.png' %}">
     <style>
         :root {
             --primary-color: #4c8eaf;
@@ -171,13 +172,13 @@
         <div class="profile-info">
             <img src="{% static 'img/profile.jpeg' %}" alt="Profile Picture">
             <div>
-                <h1>Welcome, {{ user.username }}</h1>
+                <h1>Bienvenue, {{ user.username }}</h1>
                 <p>Email: {{ user.email }}</p>
             </div>
         </div>
         <form action="logout.html" method="post">
             {% csrf_token %}
-            <input type="submit" value="Logout">
+            <input type="submit" value="Se déconnecter">
         </form>
     </div>
 </body>

@@ -203,7 +203,7 @@ def sing_up(request):
             messages.success(request, "Votre compte a été créé! Veuillez vérifier votre courrier électronique pour confirmer votre adresse e-mail afin d'activer votre compte.")
 
             subject = "Bienvenue sur notre site web!"
-            message = f"Bonjour {activite}!! \nBienvenue!! \nMerci de visiter notre site web. Nous vous avons envoyé un e-mail de confirmation, veuillez confirmer votre adresse e-mail. \n\nMerci Beaucoup\nVeolia"
+            message = f"Bonjour {name}!! \nBienvenue!! \nMerci de visiter notre site web. Nous vous avons envoyé un e-mail de confirmation, veuillez confirmer votre adresse e-mail. \n\nMerci Beaucoup\nVeolia"
             from_email = settings.EMAIL_HOST_USER
             to_list = [email]
             send_mail(subject, message, from_email, to_list, fail_silently=True)

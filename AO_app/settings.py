@@ -205,7 +205,7 @@ JAZZMIN_SETTINGS = {
     "site_header": "Portail d'Administration",
 
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_brand": "Portail d'Administration",
+    "site_brand": "Administration",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
      #"site_logo": "/Users/user/Desktop/hiiii/static/img/logo1.png",
@@ -226,7 +226,7 @@ JAZZMIN_SETTINGS = {
     "site_icon": None,
 
     # Welcome text on the login screen
-    "welcome_sign": "Bienvenue dans le pxortail d'Administration ",
+    "welcome_sign": "Bienvenue dans le portail d'Administration ",
 
     # Copyright on the footer
     "copyright": "Veolia",
@@ -249,7 +249,7 @@ JAZZMIN_SETTINGS = {
         {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
-        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        #{"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
 
         # model admin to link to (Permissions checked against model)
         {"model": "auth.User"},
@@ -279,7 +279,7 @@ JAZZMIN_SETTINGS = {
     "navigation_expanded": True,
 
     # Hide these apps when generating side menu e.g (auth)
-    "hide_apps": [],
+    "hide_apps": ["Admin_Tools_Stats"],
 
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
