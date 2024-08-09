@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>les appels d'offres</title>
+    <title>Appels d'offres | Amendis</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -72,12 +72,14 @@
                         <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
                     </div>
                     {% if user.is_authenticated %}
-                        <a href="profile.html" style="color: #04000B;">Profile</a>
-                    {% else %}
-                        <a href="login.html" style="color: #04000B;">Login
-                            <i class="ri-user-line nav--login" style="color: #04000B;"></i>
-                        </a>
-                    {% endif %}
+                    <a href="profile.html" class="nav-item nav-link">
+                        <i class="ri-user-line" style="font-size: 1.5rem; color: #04000B;"></i>
+                    </a>
+                {% else %}
+                    <a href="login.html" class="nav-item nav-link">
+                        <i class="ri-login-box-line" style="font-size: 1.5rem; color: #04000B;"></i>
+                    </a>
+                {% endif %}
                 </div>
             </nav>
             <div class="container-xxl py-5 bg-info hero-header">
@@ -88,7 +90,7 @@
                             <hr class="bg-white mx-auto mt-0" style="width: 90px;">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item"><a class="text-white" href="index.html">Acceuil</a></li>
                                     
                                     <li class="breadcrumb-item text-white active" aria-current="page">Démarches Progrès social</li>
                                 </ol>

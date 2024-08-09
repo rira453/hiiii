@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>les appels d'offres</title>
+    <title>Appels d'offres | Amendis</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -67,7 +67,7 @@
                     <div class="navbar-nav mx-auto py-0">
                         <a href="index.html" class="nav-item nav-link ">   Acceuil</a>
                         <a href="ao.html" class="nav-item nav-link">Avis d'appels d'offres</a>
-                        <a href="marches.html" class="nav-item nav-link active">Marchés attribues</a>
+                        <a href="marches.html" class="nav-item nav-link active">Marchés attribués</a>
                         <a href="investissement.html" class="nav-item nav-link ">Programme d'investissement</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Relations fournisseurs</a>
@@ -79,12 +79,14 @@
                         <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
                     </div>
                     {% if user.is_authenticated %}
-                        <a href="profile.html" style="color: #04000B;">Profile</a>
-                    {% else %}
-                        <a href="login.html" style="color: #04000B;">Login
-                            <i class="ri-user-line nav--login" style="color: #04000B;"></i>
-                        </a>
-                    {% endif %}
+                    <a href="profile.html" class="nav-item nav-link">
+                        <i class="ri-user-line" style="font-size: 1.5rem; color: #04000B;"></i>
+                    </a>
+                {% else %}
+                    <a href="login.html" class="nav-item nav-link">
+                        <i class="ri-login-box-line" style="font-size: 1.5rem; color: #04000B;"></i>
+                    </a>
+                {% endif %}
                 </div>
             </nav>
 
@@ -92,13 +94,13 @@
                 <div class="container my-5 py-5 px-lg-5">
                     <div class="row g-5 py-5">
                         <div class="col-12 text-center">
-                            <h1 class="text-white animated slideInDown">Marchés attribues</h1>
+                            <h1 class="text-white animated slideInDown">Marchés attribués</h1>
                             <hr class="bg-white mx-auto mt-0" style="width: 90px;">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item"><a class="text-white" href="index.html">Acceuil</a></li>
                                     
-                                    <li class="breadcrumb-item text-white active" aria-current="page">Marchés attribues</li>
+                                    <li class="breadcrumb-item text-white active" aria-current="page">Marchés attribués</li>
                                 </ol>
                             </nav>
                         </div>

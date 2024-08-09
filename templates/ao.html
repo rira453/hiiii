@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Les appels d'offres</title>
+    <title>Appels d'offres | Amendis</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -92,12 +92,14 @@
                         <a href="contact.html" class="nav-item nav-link">Contactez-nous</a>
                     </div>
                     {% if user.is_authenticated %}
-                        <a href="profile.html" style="color: #04000B;">Profile</a>
-                    {% else %}
-                        <a href="login.html" style="color: #04000B;">Login
-                            <i class="ri-user-line nav--login" style="color: #04000B;"></i>
-                        </a>
-                    {% endif %}
+                    <a href="profile.html" class="nav-item nav-link">
+                        <i class="ri-user-line" style="font-size: 1.5rem; color: #04000B;"></i>
+                    </a>
+                {% else %}
+                    <a href="login.html" class="nav-item nav-link">
+                        <i class="ri-login-box-line" style="font-size: 1.5rem; color: #04000B;"></i>
+                    </a>
+                {% endif %}
                 </div>
             </nav>
 
@@ -109,7 +111,7 @@
                             <hr class="bg-white mx-auto mt-0" style="width: 90px;">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item"><a class="text-white" href="index.html">Acceuil </a></li>
                                     
                                     <li class="breadcrumb-item text-white active" aria-current="page">Avis d'appels d'offres</li>
                                 </ol>
@@ -156,9 +158,9 @@
                         <td>
                             {% if row.pdf_file %}
                                 {% if user.is_authenticated %}
-                                    <a href="{% url 'download_pdf' row.pk %}">Télécharger</a>
+                                    <a href="{% url 'download_pdf' row.pk %}" class="btn btn-primary">Télécharger</a>
                                 {% else %}
-                                    <a href="login.html" style="color: #04000B;">Connecter</a>
+                                    <a href="#" class="btn btn-primary download-link">Télécharger</a>
                                 {% endif %}
                             {% else %}
                                 --
@@ -245,6 +247,40 @@
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/soi.js' %}"></script>
+    <!-- Modal -->
+<div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginRequiredModalLabel">Connexion requise</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Vous devez être connecté pour télécharger ce fichier. Veuillez vous connecter pour accéder au téléchargement.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <a href="login.html" class="btn btn-primary">Se connecter</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const downloadLinks = document.querySelectorAll('.download-link');
+
+    downloadLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default action (navigation)
+            // Show the modal
+            const loginRequiredModal = new bootstrap.Modal(document.getElementById('loginRequiredModal'));
+            loginRequiredModal.show();
+        });
+    });
+});
+
+</script>
 
 </html>

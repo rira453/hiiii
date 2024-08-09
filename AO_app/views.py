@@ -59,19 +59,28 @@ def doc(request):
 def admine(request):
     return render(request, 'admin/admine.html')
 
-
+from .forms import ContactForm
 def contact_view(request):
-    if request.method == 'POST':
+      if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Merci pour votre message!")
+            contact_request = form.save(commit=False)
+            if contact_request.type_of_request == 'Reclamation anonyme':
+                # Anonymize the contact request
+                contact_request.company_name = ''
+                contact_request.industry = ''
+                contact_request.full_name = ''
+                contact_request.phone_number = ''
+                contact_request.email = ''
+            contact_request.save()
+            messages.success(request, 'Votre demande a été envoyée avec succès.')
             return redirect('contact')
         else:
-            messages.error(request, "Il y a eu une erreur dans votre soumission.")
-    else:
+            messages.error(request, 'Il y a eu un problème avec votre demande.')
+      else:
         form = ContactForm()
-    return render(request, 'contact.html', {'form': form})
+
+      return render(request, 'contact.html', {'form': form})
 
 def index(request):
     if request.method == 'POST':
@@ -137,6 +146,7 @@ from django.contrib.auth.hashers import make_password
 def sing_up(request):
     error = False
     message = ""
+    
 
     if request.method == "POST":
         name = request.POST.get('name', None)
@@ -200,6 +210,7 @@ def sing_up(request):
             user.is_active = False  # Set user as inactive until email confirmation
             user.save()
 
+            
             messages.success(request, "Votre compte a été créé! Veuillez vérifier votre courrier électronique pour confirmer votre adresse e-mail afin d'activer votre compte.")
 
             subject = "Bienvenue sur notre site web!"
@@ -230,7 +241,8 @@ def sing_up(request):
 
     context = {
         'error': error,
-        'message': message
+        'message': message,
+        
     }
 
     return render(request, 'register.html', context)

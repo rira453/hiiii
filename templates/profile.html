@@ -11,7 +11,11 @@
             --primary-color: #4c8eaf;
             --secondary-color: #37698f;
             --font-family: 'Roboto', sans-serif;
-            --background-color: #60605c; /* Crema color */
+            --background-color: #60605c;
+            --white-color: #ffffff;
+            --dark-color: #333333;
+            --border-radius: 15px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         * {
@@ -33,8 +37,8 @@
         .profile-container {
             background: rgba(255, 255, 255, 0.9);
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
             text-align: center;
             width: 90%;
             max-width: 400px;
@@ -72,7 +76,7 @@
         }
 
         .profile-container p {
-            color: #333;
+            color: var(--dark-color);
             margin-bottom: 25px;
             font-size: 1.1em;
             position: relative;
@@ -98,7 +102,7 @@
 
         .profile-container input[type="submit"] {
             background: var(--primary-color);
-            color: #fff;
+            color: var(--white-color);
             border: none;
             padding: 12px 25px;
             border-radius: 25px;
@@ -108,29 +112,24 @@
         }
 
         .profile-container input[type="submit"]:hover {
-            background: #414341;
+            background: var(--secondary-color);
             transform: scale(1.05);
         }
 
         .profile-container .profile-info {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
         }
 
         .profile-container .profile-info img {
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-container .profile-info div {
-            flex: 1;
-            margin-left: 20px;
-            text-align: left;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 15px;
         }
 
         @media (max-width: 600px) {
@@ -149,20 +148,6 @@
             .profile-container input[type="submit"] {
                 padding: 10px 20px;
                 font-size: 0.9em;
-            }
-
-            .profile-container .profile-info {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .profile-container .profile-info img {
-                margin-bottom: 10px;
-            }
-
-            .profile-container .profile-info div {
-                margin-left: 0;
             }
         }
     </style>

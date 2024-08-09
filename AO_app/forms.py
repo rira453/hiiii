@@ -7,6 +7,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 import re
 from django.core.exceptions import ValidationError
+
+
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactRequest
@@ -18,6 +20,19 @@ class ContactForm(forms.ModelForm):
         if not re.match(r'^0[5-7]\d{8}$', phone_number):
             raise ValidationError("Veuillez entrer un numéro de téléphone marocain valide.")
         return phone_number
+    def clean(self):
+        cleaned_data = super().clean()
+        type_of_request = cleaned_data.get('type_of_request')
+        
+        if type_of_request == 'Reclamation anonyme':
+            # Ensure that personal fields are set to empty strings instead of None
+            cleaned_data['company_name'] = ''
+            cleaned_data['industry'] = ''
+            cleaned_data['full_name'] = ''
+            cleaned_data['phone_number'] = ''
+            cleaned_data['email'] = ''
+        
+        return cleaned_data
 
 class NewsletterForm(forms.ModelForm):
     class Meta:
@@ -35,6 +50,7 @@ class NewsletterForm(forms.ModelForm):
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     activite = forms.CharField(max_length=100, required=True)
+    categorie= forms.CharField(required=True)
     adresse = forms.CharField(max_length=255, required=True)
     ville = forms.CharField(max_length=100, required=True)
     telephone = forms.CharField(max_length=20, required=True)
@@ -55,3 +71,4 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['username', 'email'] 
+

@@ -246,7 +246,7 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
 
         # Url that gets reversed (Permissions can be added)
-        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Acceuil",  "url": "admin:index", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
         #{"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
@@ -282,7 +282,7 @@ JAZZMIN_SETTINGS = {
     "hide_apps": ["Admin_Tools_Stats"],
 
     # Hide these models when generating side menu (e.g auth.user)
-    "hide_models": [],
+    "hide_models": ["AO_app.Profile"],
 
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
     "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
@@ -315,6 +315,7 @@ JAZZMIN_SETTINGS = {
         "AO_app.Profile": "fas fa-user-circle",
         "AO_app.DownloadHistory": "fas fa-download",
         "AO_app.UserRegistratione": "fas fa-user-plus",
+        "admin.LogEntry": "fas fa-history",
 
     },
 

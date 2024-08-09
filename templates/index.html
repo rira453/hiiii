@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         
-        <title>Les appels d'offres</title>
+        <title>Appels d'offres | Amendis</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -39,13 +39,13 @@
         
     </head>
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-    <df-messenger
-      intent="WELCOME"
-      chat-title="AmendisAgent"
-      agent-id="4215f137-e850-4b02-a549-dc7155b10449"
-      language-code="fr"
-      
-    ></df-messenger>
+<df-messenger
+  intent="WELCOME"
+  chat-title="AmendisAgent"
+  agent-id="4215f137-e850-4b02-a549-dc7155b10449"
+  language-code="fr"
+  chat-icon="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/icons/chat-dots.svg">
+></df-messenger>
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
@@ -85,13 +85,15 @@
                         
                     </div>
                     {% if user.is_authenticated %}
-                        
-                        <a href="profile.html" style="color: #04000B;">Profile</a>
-                    {% else %}
-                        <a href="login.html" style="color: #04000B;">Login
-                            <i class="ri-user-line nav--login" style="color: #04000B;"></i>
-                        </a>
-                    {% endif %}
+    <a href="profile.html" class="nav-item nav-link">
+        <i class="ri-user-line" style="font-size: 1.5rem; color: #04000B;"></i>
+    </a>
+{% else %}
+    <a href="login.html" class="nav-item nav-link">
+        <i class="ri-login-box-line" style="font-size: 1.5rem; color: #04000B;"></i>
+    </a>
+{% endif %}
+
                 </div>
             
             </nav>

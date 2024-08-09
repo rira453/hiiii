@@ -1,6 +1,27 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
+<style>
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Adjust content padding based on sidebar state */
+    .admin-main .container-fluid {
+        padding-left: calc(var(--sidebar-width, 250px) + 15px); /* Adjust for sidebar width */
+        transition: padding-left 0.3s ease;
+    }
+
+    /* Add space for sidebar when collapsed */
+    .admin-sidebar.collapsed ~ .admin-main .container-fluid {
+        padding-left: 15px;
+    }
+</style>
 <div class="container-fluid">
     <h1 class="my-4 text-center">Tableau de bord d'administration</h1>
 

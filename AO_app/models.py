@@ -12,12 +12,12 @@ class ContactRequest(models.Model):
     ]
     
     
-    type_of_request = models.CharField(max_length=50, choices=TYPE_OF_REQUEST_CHOICES)
-    company_name = models.CharField(max_length=255)
-    industry = models.CharField(max_length=255)
-    full_name = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=15)
-    email = models.EmailField()
+    type_of_request = models.CharField(max_length=50, choices=TYPE_OF_REQUEST_CHOICES,verbose_name='Type de demande')
+    company_name = models.CharField(max_length=255, null=True,blank=True, verbose_name="Nom de l'entreprise")
+    industry = models.CharField(max_length=255, null=True,blank=True, verbose_name="Secteur d'activité")
+    full_name = models.CharField(max_length=255, null=True,blank=True, verbose_name="Nom complet")
+    phone_number = models.CharField(max_length=15, null=True,blank=True, verbose_name="Numéro de téléphone")
+    email = models.EmailField(null=True,blank=True,)
     observations = models.TextField()
     
     def __str__(self):
@@ -67,7 +67,7 @@ class Marche(models.Model):
     
 class NewsletterSubscription(models.Model):
     email = models.EmailField(unique=True)
-    subscribed_at = models.DateTimeField(auto_now_add=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True, verbose_name="Abonné à")
 
     def __str__(self):
         return self.email
@@ -88,9 +88,9 @@ class Profile(models.Model):
         return self.user.username
     
 class DownloadHistory(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    table_data = models.ForeignKey(TableData, on_delete=models.CASCADE)
-    download_timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Nom d'utilisateur")
+    table_data = models.ForeignKey(TableData, on_delete=models.CASCADE , verbose_name="ID de document")
+    download_timestamp = models.DateTimeField(auto_now_add=True, verbose_name="Date de téléchargement")
 
     def __str__(self):
         return f"{self.user.username} downloaded {self.table_data.numero_ao} on {self.download_timestamp}"

@@ -1,13 +1,5 @@
 from django.contrib import admin
 from .models import TableData, Marche, ContactRequest, NewsletterSubscription , Profile,DownloadHistory,UserRegistratione
-from django.contrib.admin import AdminSite
-from django.urls import reverse
-from django.utils.html import format_html
-from django.shortcuts import render
-from django.db.models import Count
-from django.urls import path
-import plotly.graph_objs as go
-from plotly.offline import plot
 from chartjs.views.lines import BaseLineChartView
 from django.contrib.admin.models import LogEntry
 
@@ -47,7 +39,7 @@ class DownloadHistoryChart(BaseLineChartView):
  
 @admin.register(TableData)
 class TableDataAdmin(admin.ModelAdmin):
-    list_display = ('site', 'numero_ao','categorie', 'date_lancement')  # Specify fields to display in the list view
+    list_display = ('site', 'numero_ao','categorie', 'date_lancement','date_remise','date_ouverture','estimation_projet_dhht','seance_ouverture')  # Specify fields to display in the list view
     search_fields = ('site', 'numero_ao','categorie', 'date_lancement')  # Add fields to search on in the admin
 
 
@@ -65,15 +57,15 @@ admin.site.register(LogEntry)
     
 @admin.register(UserRegistratione)
 class UserRegistrationeAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'activite', 'ville')
-    search_fields = ['username', 'activite']
+    list_display = ('username', 'email', 'activite', 'categorie','adresse','ville','telephone','fax')
+    search_fields = ['username','email', 'activite','categorie']
     
 
     
 
 @admin.register(Marche)
 class MarcheAdmin(admin.ModelAdmin):
-    list_display = ('site', 'numero_ao', 'designation', 'categorie')
+    list_display = ('site', 'numero_ao', 'designation', 'categorie','ouverture_financiere','montant_dhht','attributaire')
     search_fields = ['site', 'numero_ao','categorie']
 
     
@@ -82,6 +74,8 @@ class MarcheAdmin(admin.ModelAdmin):
 class ContactRequestAdmin(admin.ModelAdmin):
     list_display = ('type_of_request', 'company_name', 'full_name', 'phone_number', 'email')
     search_fields = ['type_of_request', 'company_name','full_name']
+
+    
 
     
 
