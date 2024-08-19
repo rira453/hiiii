@@ -33,6 +33,21 @@ class ContactRequestModelTest(TestCase):
         self.assertEqual(contact_request.email, "elidrissisiham@test.com")
         self.assertEqual(contact_request.observations, "Test observations")
 
+    def test_invalid_instance(self):
+        instance = ContactRequest(
+            type_of_request='Invalid Type',  
+            observations=''  
+        )
+        with self.assertRaises(ValidationError) as context:
+            instance.full_clean()
+
+        self.assertIn('type_of_request', context.exception.error_dict)
+        self.assertIn('observations', context.exception.error_dict)
+
+    def test_string_representation(self):
+        instance = ContactRequest(full_name='Siham Idrissi')
+        self.assertEqual(str(instance), 'Siham Idrissi')
+
 
 
 
@@ -54,22 +69,11 @@ class TableDataTest(TestCase):
         self.assertIsInstance(instance, TableData)
         self.assertEqual(instance.numero_ao, '12345')
 
-    def test_invalid_instance(self):
-        
-        instance = ContactRequest(
-            type_of_request='Invalid Type',  
-            observations=''  
-        )
-        with self.assertRaises(ValidationError) as context:
-            instance.full_clean()
-        
-        
-        self.assertIn('type_of_request', context.exception.error_dict)
-        self.assertIn('observations', context.exception.error_dict)
-
     def test_string_representation(self):
-        instance = ContactRequest(full_name='Siham Idrissi')
-        self.assertEqual(str(instance), 'Siham Idrissi')
+        instance = TableData(numero_ao='12345')
+        self.assertEqual(str(instance), '12345')
+
+    
 
 #Marche model 
 
