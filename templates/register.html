@@ -1,261 +1,257 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="{% static 'img/veolia.png' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="{% static 'img/veolia.png' %}">
 
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        background-color: #eee;
-      }
-      .card-custom-width {
-        max-width: 450px;
-      }
-      .card-body-custom-padding {
-        padding: 2rem;
-      }
-      .form-outline {
-        margin-bottom: 1rem;
-      }
-      .form-check {
-        margin-bottom: 1rem;
-      }
-      .mb-4 {
-        margin-bottom: 1rem !important;
-      }
-      .mb-5 {
-        margin-bottom: 1rem !important;
-      }
-      .h1 {
-        font-size: 2rem;
-        margin-bottom: 1.5rem !important;
-      }
-    </style>
-    <title>S'inscrire</title>
-  </head>
-  <body>
-    <section class="vh-100">
-      <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-lg-12 col-xl-11">
-            <div class="card text-black card-custom-width mx-auto" style="border-radius: 20px">
-              <div class="card-body card-body-custom-padding">
-                <div class="row justify-content-center">
-                  <div class="col-md-10 col-lg-6 col-xl-12 order-2 order-lg-1">
-                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                      S'inscrire
-                    </p>
-                    
-                    {% if error %}
-                    <div class="alert alert-danger" role="alert" data-mdb-color="danger">
-                      {{ message }}
-                    </div>
-                    {% endif %}
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet" />
+  <!-- Animate.css -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+  
+  <style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+  }
 
-                    <!-- Messages de succès et autres -->
-{% if messages %}
-{% for message in messages %}
-    <div class="alert alert-success animate__animated animate__fadeInDown" role="alert" style="background-color: #4caf50; color: white;">
-        <i class="fas fa-check-circle"></i> {{ message }}
-    </div>
-{% endfor %}
-{% endif %}
-                    
-                    <form class="mx-1 mx-md-4" action="{% url 'sing_up' %}" method="POST">
-                      {% csrf_token %}
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="text"
-                            id="form3Example1c"
-                            class="form-control"
-                            name="name"
-                            required
-                          />
-                          <label class="form-label" for="form3Example1c">Votre nom</label>
-                        </div>
-                      </div>
+  .card-custom-width {
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="email"
-                            id="form3Example3c"
-                            class="form-control"
-                            name="email"
-                            required
-                          />
-                          <label class="form-label" for="form3Example3c">Votre Email</label>
-                        </div>
-                      </div>
+  .card-body-custom-padding {
+    padding: 1.5rem;
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-briefcase fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="text"
-                            id="form3ExampleActivite"
-                            class="form-control"
-                            name="activite"
-                            required
-                          />
-                          <label class="form-label" for="form3ExampleActivite">Activité</label>
-                        </div>
-                      </div>
+  .form-outline {
+    position: relative;
+    margin-bottom: 1rem;
+  }
 
+  /* Apply border styles to all input fields */
+  .form-outline input[type="text"],
+  .form-outline input[type="email"],
+  .form-outline input[type="password"],
+  .form-outline select {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    background-color: #fff;
+  }
 
+  .form-outline input[type="password"] {
+    padding-right: 2.5rem;
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-tags fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <select
-                            id="form3ExampleCategorie"
-                            class="form-select"
-                            name="categorie"
-                            required
-                          >
-                            <option value="" disabled selected>Catégorie</option>
-                            <option value="Category 1">Informatique</option>
-                            <option value="Category 2">Assainissement</option>
-                            <option value="Category 3">Eau</option>
-                            <option value="Category 4">Électricité</option>
-                            <option value="Category 5">Transport</option>
-                            <option value="Category 6">Construction</option>
-                            <option value="Category 7">Travaux publics</option>
-                          </select>
-                          
-                        </div>
-                      </div>
+  .form-outline .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    cursor: pointer;
+    color: #0073e6;
+  }
 
+  .btn-primary {
+    background-color: #0073e6;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-home fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="text"
-                            id="form3ExampleAdresse"
-                            class="form-control"
-                            name="adresse"
-                            required
-                          />
-                          <label class="form-label" for="form3ExampleAdresse">Adresse</label>
-                        </div>
-                      </div>
+  .btn-primary:hover {
+    background-color: #005bb5;
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-city fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="text"
-                            id="form3ExampleVille"
-                            class="form-control"
-                            name="ville"
-                            required
-                          />
-                          <label class="form-label" for="form3ExampleVille">Ville</label>
-                        </div>
-                      </div>
+  .alert-success {
+    background-color: #4caf50;
+    color: white;
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-phone fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="text"
-                            id="form3ExampleTelephone"
-                            class="form-control"
-                            name="telephone"
-                            required
-                          />
-                          <label class="form-label" for="form3ExampleTelephone">Téléphone</label>
-                        </div>
-                      </div>
+  .form-check-label a {
+    color: #0073e6;
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-fax fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="text"
-                            id="form3ExampleFax"
-                            class="form-control"
-                            name="fax"
-                            required
-                          />
-                          <label class="form-label" for="form3ExampleFax">Fax</label>
-                        </div>
-                      </div>
+  .form-check-label a:hover {
+    color: #005bb5;
+  }
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="password"
-                            id="form3Example4c"
-                            class="form-control"
-                            name="password"
-                            required
-                          />
-                          <label class="form-label" for="form3Example4c">Mot de passe</label>
-                        </div>
-                      </div>
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+</style>
 
-                      <div class="d-flex flex-row align-items-center mb-4">
-                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                        <div class="form-outline flex-fill mb-0">
-                          <input
-                            type="password"
-                            id="form3Example4cd"
-                            class="form-control"
-                            name="repassword"
-                            required
-                          />
-                          <label class="form-label" for="form3Example4cd">Vérifier votre mot de passe</label>
-                        </div>
-                      </div>
+  <title>S'inscrire</title>
+</head>
+<body>
+  <section class="vh-100 d-flex justify-content-center align-items-center" style="background-color: #f0f2f5;">
+    <div class="card text-black card-custom-width">
+      <div class="card-body card-body-custom-padding">
+        <h1 class="text-center fw-bold mb-4">S'inscrire</h1>
 
-                      <div class="form-check d-flex justify-content-center mb-5">
-                       
-                        <center>Vous avez déja un compte? <a href="login.html">Se connecter</a></center>
-                      </div>
-                      
-                      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                          Enregistrer
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+        {% if error %}
+          <div class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
+        {% endif %}
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success animate__animated animate__fadeInDown" role="alert">
+              <i class="fas fa-check-circle"></i> {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'sing_up' %}">
+          {% csrf_token %}
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="text" id="formName" class="form-control" name="name" required />
+                <label class="form-label" for="formName">Nom</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="email" id="formEmail" class="form-control" name="email" required />
+                <label class="form-label" for="formEmail">Email</label>
               </div>
             </div>
           </div>
-        </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="text" id="formActivite" class="form-control" name="activite" required />
+                <label class="form-label" for="formActivite">Activité</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-outline">
+                <select id="formCategorie" class="form-select" name="categorie" required>
+                  <option value="" disabled selected>Catégorie</option>
+                  <option value="Informatique">Informatique</option>
+                  <option value="Assainissement">Assainissement</option>
+                  <option value="Eau">Eau</option>
+                  <option value="Électricité">Électricité</option>
+                  <option value="Transport">Transport</option>
+                  <option value="Construction">Construction</option>
+                  <option value="Travaux publics">Travaux publics</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="text" id="formAdresse" class="form-control" name="adresse" required />
+                <label class="form-label" for="formAdresse">Adresse</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="text" id="formVille" class="form-control" name="ville" required />
+                <label class="form-label" for="formVille">Ville</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="text" id="formTelephone" class="form-control" name="telephone" required />
+                <label class="form-label" for="formTelephone">Téléphone</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="text" id="formFax" class="form-control" name="fax" required />
+                <label class="form-label" for="formFax">Fax</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="password" id="formPassword" class="form-control" name="password" required />
+                <label class="form-label" for="formPassword">Mot de passe</label>
+                <span class="toggle-password" onclick="togglePassword('formPassword')">
+                  <i class="fas fa-eye"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-outline">
+                <input type="password" id="formRepassword" class="form-control" name="repassword" required />
+                <label class="form-label" for="formRepassword">Vérifier le mot de passe</label>
+                <span class="toggle-password" onclick="togglePassword('formRepassword')">
+                  <i class="fas fa-eye"></i>
+                </span>
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="form-check d-flex justify-content-center mb-3">
+            <input class="form-check-input me-2" type="checkbox" value="" id="formTerms" required />
+            <label class="form-check-label" for="formTerms">
+              J'accepte les <a href="#!" class="link-primary">conditions d'utilisation</a>
+            </label>
+          </div>
+          <div class="form-check d-flex justify-content-center mb-5">
+                       
+            <center>Vous avez déja un compte? <a href="login.html">Se connecter</a></center>
+          </div>
+          <div class="d-flex justify-content-center mb-3">
+            <button type="submit" class="btn btn-primary btn-lg">S'inscrire</button>
+          </div>
+        </form>
       </div>
-    </section>
-    <!-- MDB -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
-    ></script>
-  </body>
+    </div>
+  </section>
+
+  <!-- MDB -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"></script>
+  <script>
+  function togglePassword(id) {
+    const input = document.getElementById(id);
+    const icon = input.nextElementSibling.querySelector('i');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  }
+</script>
+  
+</body>
 </html>

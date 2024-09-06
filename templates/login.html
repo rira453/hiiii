@@ -27,70 +27,122 @@
     />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <title>Se connecter</title>
-    
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+      .card {
+        margin: auto;
+        width: 100%;
+        max-width: 700px; /* Increase the max-width for larger card */
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .card-body {
+        padding: 3rem; /* Increase padding inside the card */
+      }
+      .form-outline {
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+      .form-control {
+        border-radius: 25px;
+        border: 1px solid #dcdcdc;
+        padding: 12px 20px;
+        font-size: 16px;
+        box-shadow: none;
+        padding-right: 40px; /* Add padding to accommodate the icon */
+      }
+      .form-control:focus {
+        border-color: #0073e6;
+        box-shadow: 0 0 0 0.2rem rgba(0, 115, 230, 0.25);
+      }
+      .eye-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        cursor: pointer;
+        color: #0073e6;
+      }
+      .btn-primary {
+        background-color: #0073e6;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      .btn-primary:hover {
+        background-color: #005bb5;
+      }
+      .text-center-links {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .text-center-links a {
+        color: #0073e6;
+        text-decoration: none;
+      }
+      .text-center-links a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
-    <section class="vh-100" style="background-color: #eee">
-      <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-            <div class="card text-black" style="border-radius: 25px">
-              <div class="card-body p-5">
-                <h2 class="text-uppercase text-center mb-5">
-                  Se connecter
-                </h2>
-                   
-                <!-- login.html -->
-                {% if messages %}
-                <ul class="messages">
-                  {% for message in messages %}
-                  <li>{{ message }}</li>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-
-                <form action="{% url 'sing_in' %}" method="POST">
-                  {% csrf_token %}
-                  <!-- Email input -->
-                  <div class="form-outline mb-4">
-                    <input type="email" id="form1Example1" class="form-control" name="email" required />
-                    <label class="form-label" for="form1Example1">Email</label>
-                  </div>
-              
-                  <!-- Password input -->
-                  <div class="form-outline mb-4">
-                    <input type="password" id="form1Example2" class="form-control" name="password" required />
-                    <label class="form-label" for="form1Example2">Mot de passe</label>
-                  </div>
-              
-                  <!-- 2 column grid layout for inline styling -->
-                  <div class="row mb-4">
-                    <div class="col d-flex justify-content-center">
-                      <!-- Checkbox -->
-                      
-                    </div>
-              
-                    <div class="col">
-                      <!-- Simple link -->
-                      
-                    </div>
-                    <center>Mot de passe oublié? <a href="forgot_password.html">Changer le</a></center>
-                    <center>Pas de compte? <a href="register.html">Veuillez s'inscrire ici</a></center>
-                  </div>
-              
-                  <!-- Submit button -->
-                  <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
-                  
-                </form>
-                
-              </div>
-              
-            </div>
-            
-          </div>
+    <section class="vh-100 d-flex justify-content-center align-items-center" style="background-color: #f0f2f5;">
+      <div class="card text-black">
+        <div class="card-body p-md-5">
+          <h2 class="text-uppercase text-center mb-5">
+            Se connecter
+          </h2>
           
-        </div>
+          <!-- login.html -->
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          <form action="{% url 'sing_in' %}" method="POST">
+            {% csrf_token %}
+            <!-- Email input -->
+            <div class="form-outline mb-3">
+              <input type="email" id="formEmail" class="form-control" name="email" required />
+              <label class="form-label" for="formEmail">Email</label>
+            </div>
         
+            <!-- Password input -->
+            <div class="form-outline mb-3">
+              <input type="password" id="formPassword" class="form-control" name="password" required />
+              <label class="form-label" for="formPassword">Mot de passe</label>
+              <i class="fas fa-eye eye-icon" id="togglePassword"></i>
+            </div>
+        
+            <!-- 2 column grid layout for inline styling -->
+            <div class="row mb-4">
+              <div class="col d-flex justify-content-center">
+                <!-- Checkbox -->
+                <!-- You can add a remember me checkbox here if needed -->
+              </div>
+            </div>
+        
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+            
+            <!-- Links for password reset and registration -->
+            <div class="text-center-links">
+              <p>Mot de passe oublié? <a href="forgot_password.html">Changer le</a></p>
+              <p>Pas de compte? <a href="register.html">Veuillez s'inscrire ici</a></p>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -99,5 +151,20 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
     ></script>
+    <script>
+      document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordField = document.getElementById('formPassword');
+        var icon = this;
+        if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          passwordField.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    </script>
   </body>
 </html>

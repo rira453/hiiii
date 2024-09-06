@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -46,6 +47,11 @@
             color: #777777;
             font-size: 12px;
         }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 150px; /* Adjust the size of the logo as needed */
+        }
     </style>
 </head>
 <body>
@@ -55,11 +61,12 @@
         </div>
         <div class="content">
             <p>Bonjour {{ name }},</p>
-            <p>Merci de vous être inscrit sur notre site. Veuillez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous :</p>
+            <p>Merci pour votre inscription sur notre site. Veuillez confirmer votre adresse e-mail en cliquant sur le bouton ci-dessous :</p>
             <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" class="button">Confirmer mon adresse e-mail</a>
             <p>Si vous n'avez pas demandé cette inscription, veuillez ignorer cet e-mail.</p>
             <p>Cordialement,</p>
             <p><strong>L'équipe AMENDIS</strong></p>
+            <link rel="icon" type="image/x-icon" href="{% static 'img/veolia.png' %}" class ="logo">
         </div>
         <div class="footer">
             <p>&copy; 2024 Veolia. Tous droits réservés.</p>
